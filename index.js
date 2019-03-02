@@ -51,24 +51,23 @@ app.post('/move', (req, res) => {
   // NOTE: Do something here to generate your move
 
     /**
-     * Game plan
-     * get my snake head and body coords
-     * move head in a direction that isn't death (edge, myself)
-     * Chase tail?
+     * next steps:
      * break code into modules
-     * support running multiple games at once
+     *
+     * get one food first, then chase tail
+     *
+     *
      * add other snake locations
      * add food locations
      * avoid heading down dead end
-     * avoid moving within 1 squard of enemy head
+     * avoid moving within 1 square of enemy head unless I am bigger
      *
-     * next steps:
      * chase tail for first 40 moves or only 3 snakes left
      * find food
      *
     **/
 
-    //  board info
+    // board info
     height = req.body.board.height
     width = req.body.board.width
     myId = req.body.you.id
@@ -82,8 +81,6 @@ app.post('/move', (req, res) => {
      * Chase tail for first 40 turns
      * rewrite logic
      */
-    console.log()
-    console.log("current turn "+req.body.turn)
     if (req.body.turn <=39) {
         if([0,4,8,12,16,20,24,28,32,36].includes(req.body.turn)) data = {move: 'left'}
         else if([1,5,9,13,17,21,25,29,33,37].includes(req.body.turn)) data = {move: 'down'}
@@ -129,9 +126,6 @@ app.post('/move', (req, res) => {
         }
     }
 
-    console.log(food)
-    console.log(newDirection)
-    console.log("my move "+data.move)
   return res.json(data)
 })
 
