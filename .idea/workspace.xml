@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="652c546f-96b7-45c4-a2dc-b260ebe8549e" name="Default Changelist" comment="Initial commit">
+    <list default="true" id="652c546f-96b7-45c4-a2dc-b260ebe8549e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
@@ -16,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="67">
-              <caret line="68" lean-forward="true" selection-start-line="68" selection-end-line="68" />
+            <state relative-caret-position="141">
+              <caret line="94" lean-forward="true" selection-start-line="94" selection-end-line="94" />
             </state>
           </provider>
         </entry>
@@ -34,6 +34,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>document</find>
+      <find>router</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -43,6 +44,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/res.js" />
+        <option value="$PROJECT_DIR$/temp.sql" />
         <option value="$PROJECT_DIR$/index.js" />
       </list>
     </option>
@@ -53,10 +55,9 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="34" />
+  <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="1245" />
+    <option name="width" value="1080" />
     <option name="height" value="722" />
   </component>
   <component name="ProjectView">
@@ -109,7 +110,10 @@
       <option name="presentableId" value="Default" />
       <updated>1548817934455</updated>
       <workItem from="1548817936048" duration="2559000" />
-      <workItem from="1549040551361" duration="8237000" />
+      <workItem from="1549040551361" duration="12022000" />
+      <workItem from="1549916868112" duration="587000" />
+      <workItem from="1550727048489" duration="6071000" />
+      <workItem from="1551313250746" duration="2606000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1548817999782</created>
@@ -118,16 +122,24 @@
       <option name="project" value="LOCAL" />
       <updated>1548817999782</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Snake now avoids walls and itself">
+      <created>1549505396070</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1549505396070</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10796000" />
+    <option name="totallyTimeSpent" value="23845000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="722" extended-state="6" />
+    <frame x="0" y="23" width="1080" height="722" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2786753" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20038536" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -139,7 +151,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="8" visible="true" weight="0.3294893" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.3294893" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.24711697" />
@@ -155,16 +167,11 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <MESSAGE value="Initial commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial commit" />
+    <MESSAGE value="Snake now avoids walls and itself" />
+    <option name="LAST_COMMIT_MESSAGE" value="Snake now avoids walls and itself" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/res.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8730">
-          <caret line="582" lean-forward="true" selection-start-line="582" selection-end-line="582" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/res.js" />
     <entry file="file://$PROJECT_DIR$/handlers.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -172,10 +179,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/temp.sql" />
+    <entry file="file://$PROJECT_DIR$/Procfile">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="67">
-          <caret line="68" lean-forward="true" selection-start-line="68" selection-end-line="68" />
+        <state relative-caret-position="141">
+          <caret line="94" lean-forward="true" selection-start-line="94" selection-end-line="94" />
         </state>
       </provider>
     </entry>

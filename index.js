@@ -20,18 +20,18 @@ app.use(bodyParser.json())
 app.use(poweredByHandler)
 
 // --- SNAKE LOGIC GOES BELOW THIS LINE ---
-let height, width, mySnake, head, move, newDirection
+let height, width, mySnake, head, move, newDirection, myId, enemySnakes, initialStrat, data
 
 // Handle POST request to '/start'
 app.post('/start', (req, res) => {
   // NOTE: Do something here to start the game
-    height = req.body.board.height
-    width = req.body.board.width
-  //   console.log(height+", "+width)
 
   // Response data
   const data = {
-    color: '#823BFF',
+      color: '#5F5932',
+      headType: 'sand-worm',
+      tailType: 'sharp'
+    // color: '#823BFF',
   }
 
   return res.json(data)
@@ -60,47 +60,76 @@ app.post('/move', (req, res) => {
      * add other snake locations
      * add food locations
      * avoid heading down dead end
+     *
+     * next steps:
+     * chase tail for first 40 moves or only 3 snakes left
+     * find food
+     *
     **/
 
     //  board info
-    //   console.log(req.body.board)
+    height = req.body.board.height
+    width = req.body.board.width
+      // console.log(req.body)
+    myId = req.body.you.id
+    // console.log(myId)
     mySnake = req.body.you
+    enemySnakes = req.body.board.snakes.filter(snake=>{return snake.id !== myId})
     head = mySnake.body[0]
 
+
     /**
-     *
-     * Find next available direction, filter out edge of board and own snake
+     * Chase tail for first 40 turns
+     * check where head and tail and and move accordingly
+     * rework logic
      */
-    newDirection = [
-        {x:head.x, y:head.y-1, direction: "up"},
-        {x:head.x, y:head.y+1, direction: "down"},
-        {x:head.x-1, y:head.y, direction: "left"},
-        {x:head.x+1, y:head.y, direction: "right"}
-    ].filter(direction=>{
-        if (direction.x<0 ||
-            direction.y<0 ||
-            direction.x === width ||
-            direction.y === height ||
-            JSON.stringify(mySnake.body).includes(JSON.stringify({x: direction.x, y: direction.y})))
-        {
-            //Fix checking for other snake sections
-            if(
-            req.body.board.snakes.forEach(snake=>{
-                // console.log(snake)
-                JSON.stringify(snake.body).includes(JSON.stringify({x: direction.x, y: direction.y}))
-            })) {
+    if([0,4,8,12,16,20,24,28,32,36].includes(req.body.turn)) {
+        data = {move: 'left'}
+    } else if([1,5,9,13,17,21,25,29,37].includes(req.body.turn)) {
+        data = {move: 'down'}
+    } else if([2,6,10,14,18,22,26,30,38].includes(req.body.turn)) {
+        data = {move: 'right'}
+    } else if([3,7,11,15,19,23,27,31,39].includes(req.body.turn)) {
+        data = {move: 'up'}
+    } else {
+
+        /**
+         *
+         * Find next available direction, filter out edge of board and own snake
+         */
+        newDirection = [
+            {x: head.x, y: head.y - 1, direction: "up"},
+            {x: head.x, y: head.y + 1, direction: "down"},
+            {x: head.x - 1, y: head.y, direction: "left"},
+            {x: head.x + 1, y: head.y, direction: "right"}
+        ].filter(direction => {
+            if (direction.x < 0 ||
+                direction.y < 0 ||
+                direction.x === width ||
+                direction.y === height ||
+                JSON.stringify(mySnake.body).includes(JSON.stringify({x: direction.x, y: direction.y})) ||
+                enemySnakes.forEach(enemy => {
+
+                        // console.log({x:direction.x, y:direction.y})
+                        // console.log(enemy.body)
+                        // console.log(JSON.stringify(enemy.body).includes(JSON.stringify({x: direction.x, y: direction.y})))
+                        JSON.stringify(enemy.body).includes(JSON.stringify({x: direction.x, y: direction.y}))
+                    }
+                )) {
+                // console.log("here")
+                // console.log(newDirection)
                 return false
-            }
-            return false
-        } else return true
-    })
+            } else return true
+        })
 
-    move = getRandomInt(newDirection.length)
+        move = getRandomInt(newDirection.length)
 
-  // Response data
-  const data = {
-    move: newDirection[move].direction, // one of: ['up','down','left','right']
-  }
+        // console.log(newDirection[move].direction)
+        // Response data
+        data = {
+            move: newDirection[move].direction, // one of: ['up','down','left','right']
+        }
+    }
 
   return res.json(data)
 })
