@@ -20,7 +20,7 @@ app.use(bodyParser.json())
 app.use(poweredByHandler)
 
 // --- SNAKE LOGIC GOES BELOW THIS LINE ---
-let height, width, mySnake, head, move, newDirection, myId, enemySnakes, initialStrat, data
+let height, width, mySnake, head, move, newDirection, myId, enemySnakes, food, data
 
 // Handle POST request to '/start'
 app.post('/start', (req, res) => {
@@ -60,6 +60,7 @@ app.post('/move', (req, res) => {
      * add other snake locations
      * add food locations
      * avoid heading down dead end
+     * avoid moving within 1 squard of enemy head
      *
      * next steps:
      * chase tail for first 40 moves or only 3 snakes left
@@ -70,32 +71,30 @@ app.post('/move', (req, res) => {
     //  board info
     height = req.body.board.height
     width = req.body.board.width
-      // console.log(req.body)
     myId = req.body.you.id
-    // console.log(myId)
     mySnake = req.body.you
     enemySnakes = req.body.board.snakes.filter(snake=>{return snake.id !== myId})
     head = mySnake.body[0]
+    food = req.body.board.food
 
 
     /**
      * Chase tail for first 40 turns
-     * check where head and tail and and move accordingly
-     * rework logic
+     * rewrite logic
      */
-    if([0,4,8,12,16,20,24,28,32,36].includes(req.body.turn)) {
-        data = {move: 'left'}
-    } else if([1,5,9,13,17,21,25,29,37].includes(req.body.turn)) {
-        data = {move: 'down'}
-    } else if([2,6,10,14,18,22,26,30,38].includes(req.body.turn)) {
-        data = {move: 'right'}
-    } else if([3,7,11,15,19,23,27,31,39].includes(req.body.turn)) {
-        data = {move: 'up'}
+    console.log()
+    console.log("current turn "+req.body.turn)
+    if (req.body.turn <=39) {
+        if([0,4,8,12,16,20,24,28,32,36].includes(req.body.turn)) data = {move: 'left'}
+        else if([1,5,9,13,17,21,25,29,33,37].includes(req.body.turn)) data = {move: 'down'}
+        else if([2,6,10,14,18,22,26,30,34,38].includes(req.body.turn)) data = {move: 'right'}
+        else if([3,7,11,15,19,23,27,31,35,39].includes(req.body.turn)) data = {move: 'up'}
     } else {
 
         /**
          *
          * Find next available direction, filter out edge of board and own snake
+         * need to fix checking for other snake partitions
          */
         newDirection = [
             {x: head.x, y: head.y - 1, direction: "up"},
@@ -110,27 +109,29 @@ app.post('/move', (req, res) => {
                 JSON.stringify(mySnake.body).includes(JSON.stringify({x: direction.x, y: direction.y})) ||
                 enemySnakes.forEach(enemy => {
 
-                        // console.log({x:direction.x, y:direction.y})
-                        // console.log(enemy.body)
-                        // console.log(JSON.stringify(enemy.body).includes(JSON.stringify({x: direction.x, y: direction.y})))
-                        JSON.stringify(enemy.body).includes(JSON.stringify({x: direction.x, y: direction.y}))
+                    JSON.stringify(enemy.body).includes(JSON.stringify({x: direction.x, y: direction.y}))
                     }
                 )) {
-                // console.log("here")
-                // console.log(newDirection)
                 return false
             } else return true
         })
 
+        /**
+         * add weighting instead of random direction
+         * make food weighting
+         *
+         */
+
         move = getRandomInt(newDirection.length)
 
-        // console.log(newDirection[move].direction)
-        // Response data
         data = {
             move: newDirection[move].direction, // one of: ['up','down','left','right']
         }
     }
 
+    console.log(food)
+    console.log(newDirection)
+    console.log("my move "+data.move)
   return res.json(data)
 })
 
